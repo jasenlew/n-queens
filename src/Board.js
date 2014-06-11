@@ -79,7 +79,15 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+
+      var piecesCounter = 0;
+
+      for (var i = 0, l = this.attributes[rowIndex].length; i < l; i += 1) { // TO DO: Can we use reduce from underscore
+        if (this.attributes[rowIndex][i] === 1) {
+          piecesCounter += 1;
+        }
+      }
+      return piecesCounter > 1;
     },
 
     // test if any rows on this board contain conflicts
