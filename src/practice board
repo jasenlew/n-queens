@@ -1,0 +1,47 @@
+// we have n
+var n = 5;
+// create an result array
+var result = [];
+
+// add n number of arrays
+var arrayMaker = function(n, iteration) {
+
+  iteration = iteration || 0;
+
+  var newArr = [];
+
+  var fill = function() {
+    newArr.push(0);
+    if (newArr.length < n) {
+      fill();
+    }
+  };
+
+  fill();
+  result.push(newArr);
+
+  if (iteration < n) {
+    arrayMaker(n, iteration + 1);
+  }
+
+};
+
+arrayMaker(15);
+
+console.log(result);
+
+// (1) start with an inital row of 0
+// (2) start with an inital column of 0
+
+//if present-column is available
+  //then place a '1' at the column
+  //if another row is available
+    //start at (1) with an current row + 1
+  // else
+    // record board
+
+//if next ccolumn is available
+  // start at (2) with current column + 1
+  //if present-column is available
+    //then place a '1' at the column
+    //start at (1) with an current row + 1

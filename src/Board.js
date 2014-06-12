@@ -80,19 +80,27 @@
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
 
-      var piecesCounter = 0;
-
-      for (var i = 0, l = this.attributes[rowIndex].length; i < l; i += 1) { // TO DO: Can we use reduce from underscore
+      var counter = 0;
+      for (var i = 0; i < this.attributes[rowIndex].length; i++) {
         if (this.attributes[rowIndex][i] === 1) {
-          piecesCounter += 1;
+          counter++;
         }
       }
-      return piecesCounter > 1;
+      return counter > 1; // fixme
+
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var result = false;
+      var n = this.attributes.n;
+      // iterating over hasRowConflict n times with rowIndex as i
+      for (var i = 0; i < n; i++) {
+        if (this.hasRowConflictAt(i)) {
+          result = true;
+        }
+      }
+      return result; // fixme
     },
 
 
@@ -102,12 +110,31 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+
+      var counter = 0;
+
+      var rows = this.attributes;
+
+      for (var i = 0, l = rows.n; i < l; i += 1) {
+        if (rows[i][colIndex] === 1) {
+          counter += 1;
+        }
+      }
+      // debugger;
+      return counter > 1; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var result = false;
+      var n = this.attributes.n;
+      // iterating over hasRowConflict n times with rowIndex as i
+      for (var i = 0; i < n; i++) {
+        if (this.hasColConflictAt(i)) {
+          result = true;
+        }
+      }
+      return result; // fixme
     },
 
 
