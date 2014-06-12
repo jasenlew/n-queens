@@ -64,9 +64,63 @@ console.log(result);
 
 
 
+//////QUEEN TIME
+
+create a function that takes a coordinate input (rowIndex, colIndex) of the the queen just placed (PURPOSE: add to add to the alreadyOccupiedSquares object... specifically adding a property, which has a [1] key that is a stringified version of the off-limit coordinates and [2] value set to true)
 
 
-// FUNCTION: iterating over row elements, and PAUSING at the column when no piece exists
-  // put a piece in column
-  // then go down one row
-  // FUNCTION
+//-->NOTE:
+
+
+
+
+var getAttackedSquares = function(rowIndex, colIndex, addOrRemove) {
+
+  //create storage element for the attacked spaces
+  //create var squares element to hold the attackedsquares to be addOrRemoved for the passed in Queen coordinates
+  // var stringifiedCoordinates = stringify first two arguments
+
+  // if the stringified version of rowIndex, colIndex already exist in storage element --> storage[stringified arguments] is true
+    //squares = value of the stringified version of rowI,colI
+  // else
+    //col
+      // i = rowIndex + 1; i < n; i++
+        // push to square: "[i, colIndex]"
+        //
+    //major diagonal
+      // var targetColumn = colIndex + 1
+      // targetRow = rowIndex + 1; targetRow < n && targetColumn < n; targetRow++
+        // push to square: "[targetRow,targetColumn]"
+        // currentColumn++
+
+    //minor diagonal
+      // targetColumn = colIndex - 1
+      // targetRow = rowIndex + 1; targetRow < n && targetColumn >= 0; targetRow++
+        // push to square: "[targetRow,targetColumn]"
+        // currentColumn--
+
+    //memoize
+      // storage[stringifiedCoordinates] = square
+
+  //addOrRemove(squares);
+
+};
+
+var addSquares = function (squares) {
+};
+
+var removeSquares = function (squares) {
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
