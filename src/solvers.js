@@ -25,53 +25,7 @@ window.findNRooksSolution = function(n) {
   // console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
 window.countNRooksSolutions = function(n) {
 
-  var board = [];
-
-  var boardMaker = function(n, iteration) {
-
-    iteration = iteration || 0;
-
-    var newRow = [];
-
-    var fillRowWithZeros = function() {
-      newRow.push(0);
-      if (newRow.length < n) {
-        fillRowWithZeros();
-      }
-    };
-
-    fillRowWithZeros();
-    board.push(newRow);
-
-    if (iteration < n) {
-      boardMaker(n, iteration + 1);
-    }
-  };
-
-// (1) r
-// (2) c
-
-//if c is not in alreadyOccupiedColumns
-  //then place a '1' at c r
-  //record [c, r] in board
-  //if board.length === n
-    //boards.push(board)
-  //add c to alreadyOccupiedColumns
-  //if r + 1 < n
-    //go to (1),adding r + 1, c: 0 to the stack
-  // (3)
-  // pop one element off of board
-  // pop one element of alreadyOccupiedColumns
-  // else
-    // add board to boards
-
-// if c + 1 < n
-  // go to (2) with c + 1
-// else
-  // return this call: go to (3)
-
-
-  var boardsCounter = 0;
+var boardsCounter = 0;
   var placedRooks = 0;
   var alreadyOccupiedColumns = {};
 
@@ -81,6 +35,7 @@ window.countNRooksSolutions = function(n) {
 
     while (column < n) {
       if (!alreadyOccupiedColumns[column]) {
+        placedRooks++;
         if (placedRooks === n) {
           boardsCounter++;
         }
@@ -92,9 +47,7 @@ window.countNRooksSolutions = function(n) {
         delete alreadyOccupiedColumns[column];
       }
 
-      if ((column + 1) < n) {
-        column++;
-      }
+      column++;
     }
     return;
   };
