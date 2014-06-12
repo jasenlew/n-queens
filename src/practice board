@@ -30,24 +30,23 @@ arrayMaker(15);
 
 console.log(result);
 
-// board[[]];
 
 // n: 3
-// c:
-// r:
-// alreadyOccupiedColumns[]
-// board: []
-// boards: [b1, b2]
+// alreadyOccupiedColumns[0]
+// placedRooks: 1
+// solutions: 0
 
 
 // (1) r
 // (2) c
 
+// c:
+// r:
 //if c is not in alreadyOccupiedColumns
   //then place a '1' at c r
-  //record [c, r] in board
-  //if board.length === n
-    //boards.push(board)
+  // placedRooks++
+  //if placedRooks === n
+    //solutions++
   //add c to alreadyOccupiedColumns
   //if r + 1 < n
     //go to (1),adding r + 1, c: 0 to the stack
@@ -85,31 +84,45 @@ var getAttackedSquares = function(rowIndex, colIndex, addOrRemove) {
   // else
     //col
       // i = rowIndex + 1; i < n; i++
-        // push to square: "[i, colIndex]"
+        // push to squares: "[i, colIndex]"
         //
     //major diagonal
       // var targetColumn = colIndex + 1
       // targetRow = rowIndex + 1; targetRow < n && targetColumn < n; targetRow++
-        // push to square: "[targetRow,targetColumn]"
+        // push to squares: "[targetRow,targetColumn]"
         // currentColumn++
 
     //minor diagonal
       // targetColumn = colIndex - 1
       // targetRow = rowIndex + 1; targetRow < n && targetColumn >= 0; targetRow++
-        // push to square: "[targetRow,targetColumn]"
+        // push to squares: "[targetRow,targetColumn]"
         // currentColumn--
 
     //memoize
-      // storage[stringifiedCoordinates] = square
+      // storage[stringifiedCoordinates] = squares
 
   //addOrRemove(squares);
 
 };
 
-var addSquares = function (squares) {
+var addSquaresToAttackedSquares = function (squares) {
+  for (var i = 0, l = squares.length; i < l; i += 1) {
+    var attackedSquareCount = alreadyAttackedSquares[squares[i]];
+
+    if (!attackedSquareCount) {
+      attackedSquareCount = 1;
+    } else {
+      attackedSquareCount += 1;
+    }
+  }
 };
 
-var removeSquares = function (squares) {
+var removeSquaresFromAttackedSquares = function (squares) {
+  for (var i = 0, l = squares.length; i < l; i += 1) {
+    var attackedSquareCount = alreadyAttackedSquares[squares[i]];
+
+    attackedSquareCount -= 1;
+  }
 };
 
 
