@@ -72,9 +72,6 @@ create a function that takes a coordinate input (rowIndex, colIndex) of the the 
 
 
 
-
-var getAttackedSquares = function(rowIndex, colIndex, addOrRemove) {
-
   //create storage element for the attacked spaces
   //create var squares element to hold the attackedsquares to be addOrRemoved for the passed in Queen coordinates
   // var stringifiedCoordinates = stringify first two arguments
@@ -100,8 +97,40 @@ var getAttackedSquares = function(rowIndex, colIndex, addOrRemove) {
 
     //memoize
       // storage[stringifiedCoordinates] = squares
+      //
+
+var getAttackedSquares = function(rowIndex, colIndex, addOrRemove) {
 
   //addOrRemove(squares);
+  this.storageSquares = {};
+  var squares = [];
+  var stringifiedQueenSquare = '[' + JSON.stringify(rowIndex) + ',' + JSON.stringify(colIndex) + ']';
+
+  if (this.storageSquares[stringifiedQueenSquare]) {
+    squares = this.storageSquares[stringifiedQueenSquare];
+  } else {
+    //Columns
+    for (var i = rowIndex + 1; i < n; i++) {
+      squares.push(JSON.stringify([i,colIndex]));
+    }
+    //Major diagonals
+    var targetColumn = colIndex + 1;
+    for (var targetRow = rowIndex + 1; targetRow < n && targetColumn < n; targetRow++) {
+      squares.push(JSON.stringify([targetRow,targetColumn]));
+      currentColumn++;
+    }
+
+    //Minor diagonals
+    targetColumn = colIndex - 1;
+    for (targetRow = rowIndex + 1; targetRow < n && targetColumn >= 0; targetRow++) {
+      squares.push(JSON.stringify([targetRow,targetColumn]));
+      currentColumn--;
+    }
+
+    this.storageSquares[stringifiedQueenSquare] = squares;
+  }
+
+  addOrRemove(squares);
 
 };
 
@@ -129,6 +158,15 @@ var removeSquaresFromAttackedSquares = function (squares) {
 
 
 
+var add = function () {
+  this.storage = {};
+  this.storage.hi = "hi";
+  var a = Array.slice.call(arguments, 0, 2);
+  console.log(a);
+};
+
+add(1,2,3);
+console.log(this.storage);
 
 
 

@@ -25,7 +25,7 @@ window.findNRooksSolution = function(n) {
   // console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
 window.countNRooksSolutions = function(n) {
 
-var boardsCounter = 0;
+  var boardsCounter = 0;
   var placedRooks = 0;
   var alreadyOccupiedColumns = {};
 
@@ -67,18 +67,71 @@ window.findNQueensSolution = function(n) {
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
 };
-
+//
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
+  if (n === 0 || n === 1) {
+    return 1;
+  }
 
-  var getAttackedSquares(rowIndex, colIndex, addOrRemove) {};
-  var addSquaresToAttackedSquares(squares) {};
-  var removeSquaresFromAttackedSquares(squares) {};
+  var getAttackedSquares = function(rowIndex, colIndex, addOrRemove) {
+
+    //addOrRemove(squares);
+    this.storageSquares = {};
+    var squares = [];
+    var stringifiedQueenSquare = '[' + JSON.stringify(rowIndex) + ',' + JSON.stringify(colIndex) + ']';
+
+    if (this.storageSquares[stringifiedQueenSquare]) {
+      squares = this.storageSquares[stringifiedQueenSquare];
+    } else {
+      //Columns
+      for (var i = rowIndex + 1; i < n; i++) {
+        squares.push(JSON.stringify([i,colIndex]));
+      }
+      //Major diagonals
+      var targetColumn = colIndex + 1;
+      for (var targetRow = rowIndex + 1; targetRow < n && targetColumn < n; targetRow++) {
+        squares.push(JSON.stringify([targetRow,targetColumn]));
+        targetColumn++;
+      }
+
+      //Minor diagonals
+      targetColumn = colIndex - 1;
+      for (targetRow = rowIndex + 1; targetRow < n && targetColumn >= 0; targetRow++) {
+        squares.push(JSON.stringify([targetRow,targetColumn]));
+        targetColumn--;
+      }
+
+      this.storageSquares[stringifiedQueenSquare] = squares;
+    }
+
+    addOrRemove(squares);
+
+  };
+
+  var addSquaresToAttackedSquares = function (squares) {
+    for (var i = 0, l = squares.length; i < l; i += 1) {
+
+      if (!alreadyAttackedSquares[squares[i]]) {
+        alreadyAttackedSquares[squares[i]] = 1;
+      } else {
+        alreadyAttackedSquares[squares[i]] += 1;
+      }
+    }
+  };
+
+  var removeSquaresFromAttackedSquares = function (squares) {
+    for (var i = 0, l = squares.length; i < l; i += 1) {
+
+      alreadyAttackedSquares[squares[i]] -= 1;
+    }
+  };
 
   var boardsCounter = 0;
   var placedQueens = 0;
   var alreadyAttackedSquares = {};
+
 
   var iterateOverRow = function (row) {
     var row = row || 0;
@@ -86,7 +139,7 @@ window.countNQueensSolutions = function(n) {
 
     while (column < n) {
       var square = JSON.stringify([row, column]);
-      if (alreadyAttackedSquares[square] === 0) {
+      if (!alreadyAttackedSquares[square]) {
         placedQueens++;
 
         if (placedQueens === n) {
@@ -107,7 +160,7 @@ window.countNQueensSolutions = function(n) {
     }
     return;
   };
-
+  // debugger;
   iterateOverRow();
 
   return boardsCounter;
