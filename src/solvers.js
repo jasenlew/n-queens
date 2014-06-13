@@ -75,6 +75,15 @@ window.countNQueensSolutions = function(n) {
     return 1;
   }
 
+  if (n % 2 === 0) {
+    var nIs = 'even';
+    var nHalf = n / 2;
+  } else {
+    var nIs = 'odd';
+    var nHalf = Math.floor(n / 2);
+  }
+
+
   var getAttackedSquares = function(rowIndex, colIndex, addOrRemove) {
 
     //addOrRemove(squares);
@@ -157,10 +166,21 @@ window.countNQueensSolutions = function(n) {
       }
 
       column++;
+      if (row === 0 && column === nHalf) {
+      // debugger;
+        if (nIs === 'even') {
+          boardsCounter = boardsCounter * 2;
+          return;
+        } else {
+          var nHalfBoards = boardsCounter;
+        }
+      } else if (row === 0 && column === (nHalf + 1)) {
+        boardsCounter = nHalfBoards + boardsCounter;
+        return;
+      }
     }
     return;
   };
-  // debugger;
   iterateOverRow();
 
   return boardsCounter;
